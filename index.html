@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Lyre</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,600&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-image: url('chinjuforest.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+        }
+
+        .note {
+            aspect-ratio: 1 / 1;
+            min-width: 3em;
+            font-family: 'Literata', serif;
+            font-weight: 600;
+            font-size: max(1em, 3vw);
+            color: #63AEA7;
+            background-color: #FFF9EF;
+            border: solid #DFD0B5;
+            border-radius: 10em;
+            flex-grow: 1;
+        }
+
+        .note-label {
+            font-size: max(0.5em, 2vw);
+            font-family: 'Literata', serif;
+            font-weight: 400;
+            color: #AAAA82;
+            margin: 0;
+        }
+
+        .note:active {
+            background-color: #D3BD8E;
+        }
+
+        .note-active {
+            background-color: #D3BD8E;
+        }
+
+        .notes-row {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 100%;
+        }
+
+        .notes-container {
+            height: 100vh;
+            max-width: 800px;
+            margin: auto;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-prompt">Loading audio...</div>
+
+    <div class="notes-container">
+        <div class="notes-row">
+            <button class="note do1">
+                <em>do</em>
+                <p class="note-label">Q</p>
+            </button>
+            <button class="note re1">
+                <em>re</em>
+                <p class="note-label">W</p>
+            </button>
+            <button class="note mi1">
+                <em>mi</em>
+                <p class="note-label">E</p>
+            </button>
+            <button class="note fa1">
+                <em>fa</em>
+                <p class="note-label">R</p>
+            </button>
+            <button class="note so1">
+                <em>so</em>
+                <p class="note-label">T</p>
+            </button>
+            <button class="note la1">
+                <em>la</em>
+                <p class="note-label">Y</p>
+            </button>
+            <button class="note ti1">
+                <em>ti</em>
+                <p class="note-label">U</p>
+            </button>
+        </div>
+        <div class="notes-row">
+            <button class="note do2">
+                <em>do</em>
+                <p class="note-label">A</p>
+            </button>
+            <button class="note re2">
+                <em>re</em>
+                <p class="note-label">S</p>
+            </button>
+            <button class="note mi2">
+                <em>mi</em>
+                <p class="note-label">D</p>
+            </button>
+            <button class="note fa2">
+                <em>fa</em>
+                <p class="note-label">F</p>
+            </button>
+            <button class="note so2">
+                <em>so</em>
+                <p class="note-label">G</p>
+            </button>
+            <button class="note la2">
+                <em>la</em>
+                <p class="note-label">H</p>
+            </button>
+            <button class="note ti2">
+                <em>ti</em>
+                <p class="note-label">J</p>
+            </button>
+        </div>
+        <div class="notes-row">
+            <button class="note do3">
+                <em>do</em>
+                <p class="note-label">Z</p>
+            </button>
+            <button class="note re3">
+                <em>re</em>
+                <p class="note-label">X</p>
+            </button>
+            <button class="note mi3">
+                <em>mi</em>
+                <p class="note-label">C</p>
+            </button>
+            <button class="note fa3">
+                <em>fa</em>
+                <p class="note-label">V</p>
+            </button>
+            <button class="note so3">
+                <em>so</em>
+                <p class="note-label">B</p>
+            </button>
+            <button class="note la3">
+                <em>la</em>
+                <p class="note-label">N</p>
+            </button>
+            <button class="note ti3">
+                <em>ti</em>
+                <p class="note-label">M</p>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener("load", main, false);
+
+        const AUDIO_NAMES = [
+            "do1", "re1", "mi1", "fa1", "so1", "la1", "ti1",
+            "do2", "re2", "mi2", "fa2", "so2", "la2", "ti2",
+            "do3", "re3", "mi3", "fa3", "so3", "la3", "ti3",
+        ]
+        const BUTTONS = [
+            "Q", "W", "E", "R", "T", "Y", "U",
+            "A", "S", "D", "F", "G", "H", "J",
+            "Z", "X", "C", "V", "B", "N", "M",
+        ]
+
+        async function main() {
+            let audioContext = null;
+            try {
+                audioContext = new AudioContext()
+            } catch (e) {
+                alert("Web Audio API is not supported in this browser.")
+            }
+
+            const audioBuffers = await loadAllAudios();
+            const decodedAudios =
+                await decodeBuffers(audioContext, audioBuffers);
+            for (const [name, decodedAudio] of Object.entries(decodedAudios)) {
+                document.querySelector("." + name).onclick =
+                    makePlayAudioCallback(audioContext, decodedAudio);
+            }
+
+            const buttons = {};
+            for (let i = 0; i < BUTTONS.length; i++) {
+                buttons[BUTTONS[i]] =
+                    document.querySelector("." + AUDIO_NAMES[i]);
+            }
+            document.addEventListener("keydown", (event) => {
+                const key = event.key.toUpperCase();
+                if (key in buttons) {
+                    const button = buttons[key];
+                    const noteActiveClass = "note-active"
+                    button.click();
+                    button.classList.add(noteActiveClass);
+                    // setTimeout(() => {
+                    //     button.classList.remove(noteActiveClass);
+                    // }, 200)
+                }
+            });
+            document.addEventListener("keyup", () => {
+                for (const button of Object.values(buttons)) {
+                    button.classList.remove("note-active");
+                }
+            });
+
+            document.querySelector(".loading-prompt").style.display = "none";
+        }
+
+        // Loads all audios into a name:arraybuffer pair.
+        async function loadAllAudios() {
+            const promises = AUDIO_NAMES.map((n) => fetch(n + ".mp3"));
+            const responses = await Promise.all(promises);
+            const buffers = await Promise.all(
+                responses.map((r) => r.arrayBuffer())
+            );
+
+            const namedBuffers = {};
+            for (let i = 0; i < AUDIO_NAMES.length; i++) {
+                namedBuffers[AUDIO_NAMES[i]] = buffers[i];
+            }
+
+            return namedBuffers;
+        }
+
+        // Takes a name:arraybuffer Object and decodes them for 
+        // AudioBufferSourceNode use.
+        async function decodeBuffers(audioContext, audioBuffers) {
+            const decodedAudios = {};
+            for (const [name, buffer] of Object.entries(audioBuffers)) {
+                decodedAudios[name] =
+                    await audioContext.decodeAudioData(buffer);
+            }
+
+            return decodedAudios;
+        }
+
+        function makePlayAudioCallback(audioContext, decodedAudio) {
+            return () => {
+                const audioSource = new AudioBufferSourceNode(audioContext);
+                audioSource.buffer = decodedAudio;
+                audioSource.connect(audioContext.destination);
+
+                audioSource.start(0);
+            };
+        }
+    </script>
+</body>
+
+</html>
