@@ -18,23 +18,39 @@
             background-size: cover;
             background-position: center;
             margin: 0;
+            height: 100vh;
+        }
+
+        .notes-container {
+            height: 100%;
+            width: 100%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(7, 80px);
+            gap: 5px;
+            justify-items: center;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
         }
 
         .note {
-            aspect-ratio: 1 / 1;
-            min-width: 3em;
+            height: 80px;
+            width: 80px;
             font-family: 'Literata', serif;
             font-weight: 600;
-            font-size: max(1em, 3vw);
             color: #63AEA7;
             background-color: #FFF9EF;
             border: solid #DFD0B5;
             border-radius: 10em;
-            flex-grow: 1;
+        }
+
+        .note em {
+            font-size: 1.5rem;
         }
 
         .note-label {
-            font-size: max(0.5em, 2vw);
+            font-size: 1rem;
             font-family: 'Literata', serif;
             font-weight: 400;
             color: #AAAA82;
@@ -48,124 +64,98 @@
         .note-active {
             background-color: #D3BD8E;
         }
-
-        .notes-row {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            width: 100%;
-        }
-
-        .notes-container {
-            height: 80vh;
-            max-width: 800px;
-            margin: auto;
-            display: flex;
-            flex-flow: column nowrap;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-        }
     </style>
 </head>
 
 <body>
-    <div class="loading-prompt">Loading audio...</div>
-
     <div class="notes-container">
-        <div class="notes-row">
-            <button class="note do1">
-                <em>do</em>
-                <p class="note-label">Q</p>
-            </button>
-            <button class="note re1">
-                <em>re</em>
-                <p class="note-label">W</p>
-            </button>
-            <button class="note mi1">
-                <em>mi</em>
-                <p class="note-label">E</p>
-            </button>
-            <button class="note fa1">
-                <em>fa</em>
-                <p class="note-label">R</p>
-            </button>
-            <button class="note so1">
-                <em>so</em>
-                <p class="note-label">T</p>
-            </button>
-            <button class="note la1">
-                <em>la</em>
-                <p class="note-label">Y</p>
-            </button>
-            <button class="note ti1">
-                <em>ti</em>
-                <p class="note-label">U</p>
-            </button>
-        </div>
-        <div class="notes-row">
-            <button class="note do2">
-                <em>do</em>
-                <p class="note-label">A</p>
-            </button>
-            <button class="note re2">
-                <em>re</em>
-                <p class="note-label">S</p>
-            </button>
-            <button class="note mi2">
-                <em>mi</em>
-                <p class="note-label">D</p>
-            </button>
-            <button class="note fa2">
-                <em>fa</em>
-                <p class="note-label">F</p>
-            </button>
-            <button class="note so2">
-                <em>so</em>
-                <p class="note-label">G</p>
-            </button>
-            <button class="note la2">
-                <em>la</em>
-                <p class="note-label">H</p>
-            </button>
-            <button class="note ti2">
-                <em>ti</em>
-                <p class="note-label">J</p>
-            </button>
-        </div>
-        <div class="notes-row">
-            <button class="note do3">
-                <em>do</em>
-                <p class="note-label">Z</p>
-            </button>
-            <button class="note re3">
-                <em>re</em>
-                <p class="note-label">X</p>
-            </button>
-            <button class="note mi3">
-                <em>mi</em>
-                <p class="note-label">C</p>
-            </button>
-            <button class="note fa3">
-                <em>fa</em>
-                <p class="note-label">V</p>
-            </button>
-            <button class="note so3">
-                <em>so</em>
-                <p class="note-label">B</p>
-            </button>
-            <button class="note la3">
-                <em>la</em>
-                <p class="note-label">N</p>
-            </button>
-            <button class="note ti3">
-                <em>ti</em>
-                <p class="note-label">M</p>
-            </button>
-        </div>
+        <button class="note do1">
+            <em>do</em>
+            <p class="note-label">Q</p>
+        </button>
+        <button class="note re1">
+            <em>re</em>
+            <p class="note-label">W</p>
+        </button>
+        <button class="note mi1">
+            <em>mi</em>
+            <p class="note-label">E</p>
+        </button>
+        <button class="note fa1">
+            <em>fa</em>
+            <p class="note-label">R</p>
+        </button>
+        <button class="note so1">
+            <em>so</em>
+            <p class="note-label">T</p>
+        </button>
+        <button class="note la1">
+            <em>la</em>
+            <p class="note-label">Y</p>
+        </button>
+        <button class="note ti1">
+            <em>ti</em>
+            <p class="note-label">U</p>
+        </button>
+        <button class="note do2">
+            <em>do</em>
+            <p class="note-label">A</p>
+        </button>
+        <button class="note re2">
+            <em>re</em>
+            <p class="note-label">S</p>
+        </button>
+        <button class="note mi2">
+            <em>mi</em>
+            <p class="note-label">D</p>
+        </button>
+        <button class="note fa2">
+            <em>fa</em>
+            <p class="note-label">F</p>
+        </button>
+        <button class="note so2">
+            <em>so</em>
+            <p class="note-label">G</p>
+        </button>
+        <button class="note la2">
+            <em>la</em>
+            <p class="note-label">H</p>
+        </button>
+        <button class="note ti2">
+            <em>ti</em>
+            <p class="note-label">J</p>
+        </button>
+        <button class="note do3">
+            <em>do</em>
+            <p class="note-label">Z</p>
+        </button>
+        <button class="note re3">
+            <em>re</em>
+            <p class="note-label">X</p>
+        </button>
+        <button class="note mi3">
+            <em>mi</em>
+            <p class="note-label">C</p>
+        </button>
+        <button class="note fa3">
+            <em>fa</em>
+            <p class="note-label">V</p>
+        </button>
+        <button class="note so3">
+            <em>so</em>
+            <p class="note-label">B</p>
+        </button>
+        <button class="note la3">
+            <em>la</em>
+            <p class="note-label">N</p>
+        </button>
+        <button class="note ti3">
+            <em>ti</em>
+            <p class="note-label">M</p>
+        </button>
     </div>
+
+    <div class="loading-prompt">Loading audio...</div>
 
     <script>
         window.addEventListener("load", main, false);
