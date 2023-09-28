@@ -26,7 +26,7 @@
             width: 100%;
             margin: auto;
             display: grid;
-            grid-template-columns: repeat(7, 80px);
+            grid-template-columns: repeat(7, 90px);
             gap: 5px;
             justify-items: center;
             align-items: center;
@@ -35,8 +35,8 @@
         }
 
         .note {
-            height: 80px;
-            width: 80px;
+            height: 90px;
+            width: 90px;
             font-family: 'Literata', serif;
             font-weight: 600;
             color: #63AEA7;
@@ -250,7 +250,10 @@
             return () => {
                 const audioSource = new AudioBufferSourceNode(audioContext);
                 audioSource.buffer = decodedAudio;
-                audioSource.connect(audioContext.destination);
+                const gainNode = audioContext.createGain();
+                gainNode.gain.value = 3;
+
+                audioSource.connect(gainNode).connect(audioContext.destination);
 
                 audioSource.start(0);
             };
