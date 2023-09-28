@@ -193,8 +193,13 @@
             const decodedAudios =
                 await decodeBuffers(audioContext, audioBuffers);
             for (const [name, decodedAudio] of Object.entries(decodedAudios)) {
-                document.querySelector("." + name).onclick =
+                const button = document.querySelector("." + name)
+                button.onclick =
                     makePlayAudioCallback(audioContext, decodedAudio);
+                button.ontouchstart = (event) => {
+                    event.preventDefault();
+                    makePlayAudioCallback(audioContext, decodedAudio)();
+                }
             }
 
             const buttons = {};
